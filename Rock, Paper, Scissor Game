@@ -1,0 +1,100 @@
+//TechnoHacks Internship Task II: Rock, paper, scissor Game Against Computer
+
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+using namespace std;
+
+void printChoices()
+{
+    cout<<"Choose Your weapon: "<<endl;
+    cout<<" 1. Rock "<<endl;
+    cout<<" 2. Paper "<<endl;
+    cout<<" 3. Scissor "<<endl;
+}
+
+void printResult(string userChoice, string computerChoice, string result)
+{
+    cout<<"You Choose "<<userChoice<<endl;
+    cout<<"The Computer Choose "<<computerChoice<<endl;
+    cout<<"Result: "<<result<<endl;
+}
+
+string getComputerChoice()
+{
+    srand(time(0));
+    int choice = rand() % 3;
+    
+    if(choice ==0)
+    {
+        return "Rock";
+    }
+    else if(choice ==1)
+    {
+        return "Paper";
+    }
+    else
+    {
+        return "Scissor";
+    }
+}
+
+string determineResult(string userChoice, string computerChoice)
+{
+    if (userChoice == computerChoice)
+    {
+        return "It is the Tie.";
+    }
+    else if( (userChoice == "Rock" && computerChoice == "Scissor") || (userChoice == "Paper" && computerChoice == " Rock") || (userChoice == "Scissor" && computerChoice == "Paper"))
+    {
+        return "You Win!";
+    }
+    else
+    {
+        return "Computer Win!";
+    }
+}
+
+int main()
+{
+    string choices[3] = {"Rock", "Paper", "Scissor"};
+    string symbols[3] = {"✊", "✋", "✌️"};
+
+    while (true)
+    {
+        printChoices();
+        int userChoice;
+        cin>>userChoice;
+
+        if(userChoice > 3 || userChoice < 1)
+        {
+            cout<<"Invalid Input. Please Try Again. "<<endl;
+            continue;
+        }
+
+        string userWeapon = choices[userChoice -1];
+        string computerWeapon = getComputerChoice();
+
+        cout<<endl;
+
+        cout<<"You: "<<symbols[userChoice - 1]<<endl;
+        cout<<"Computer: "<<symbols[computerWeapon == "Rock" ? 0: (computerWeapon == "Paper" ? 1:2 )]<<endl;
+
+        string result = determineResult(userWeapon, computerWeapon);
+
+        printResult(userWeapon, computerWeapon, result);
+        cout<<endl;
+        cout<<"Do you want to play again? (yes/no): "<<endl;
+
+        string playAgain;
+        cin>>playAgain;
+
+        if(playAgain != "yes")
+        {
+            break;
+        }
+        cout<<endl;
+    }
+    cout<<"Thanks for playing. "<<endl;
+    return 0;
+}
